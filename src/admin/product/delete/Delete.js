@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import swal from 'sweetalert';
 
-class UpdateProducts extends Component {
+class DeleteProducts extends Component {
 
     constructor(props) {
         super(props);
@@ -18,8 +18,8 @@ class UpdateProducts extends Component {
         };
 
         this.myChangeHandler = this.myChangeHandler.bind(this)
-        this.submitForm = this.submitForm.bind(this)
-        this.searchData=this.searchData.bind(this)
+        this.searchData = this.searchData.bind(this)
+        this.deleteData=this.deleteData.bind(this)
       }
 
     myChangeHandler = (event) => {
@@ -50,28 +50,28 @@ class UpdateProducts extends Component {
 				</button>
          </div>
 
-<b> Product Update</b><hr></hr>
+<b> Product Delete</b><hr></hr>
 			<form>
 				<div className="form-group">
 					 
 					<label>
 						Name
 					</label>
-					<input type="text" name="name" value={this.state.name}  className="form-control"  onChange={this.myChangeHandler} />
+					<input type="text" name="name" value={this.state.name}  className="form-control" disabled  onChange={this.myChangeHandler} />
 				</div>
 				<div className="form-group">
 					 
 					<label>
 						Description
 					</label>
-					<input type="text" name="desc" value={this.state.desc}  className="form-control" onChange={this.myChangeHandler} />
+					<input type="text" name="desc" value={this.state.desc}  className="form-control" disabled onChange={this.myChangeHandler} />
 				</div>
                 <div className="form-group">
 					 
 					<label>
 						Image
 					</label>
-					<input type="text" name="image" value={this.state.image} className="form-control" onChange={this.myChangeHandler} />
+					<input type="text" name="image" value={this.state.image} className="form-control" disabled onChange={this.myChangeHandler} />
 				</div>
 
                 <div className="form-group">
@@ -79,12 +79,10 @@ class UpdateProducts extends Component {
 					<label>
 						Price
 					</label>
-					<input type="number" name="price" value={this.state.price} className="form-control" onChange={this.myChangeHandler} />
+					<input type="number" name="price" value={this.state.price} className="form-control" disabled onChange={this.myChangeHandler} />
 				</div>
-			
-				
-				<button type="button" className="btn btn-primary" onClick={this.submitForm}>
-					Submit
+                <button type="button" className="btn btn-primary" onClick={this.deleteData}>
+					Delete
 				</button>
 			</form>
 		</div>
@@ -94,24 +92,45 @@ class UpdateProducts extends Component {
     }
 
 
-    submitForm(){
-        axios({
-            method:'PUT',
-            url: `http://localhost:4000/api/admin/products/${this.state._id}`,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-                Accept: "application/json"
-              },
-            data:this.state,
-            
-        }).then(response => {
-            if (response && response.data) {
-                swal("Success!", "Record Updated!", "success");
-              this.setState({ clients: response.data });
-            }
+    deleteData(){
+
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this record!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
           })
-          .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+          .then((willDelete) => {
+            if (willDelete) {
+
+                axios({
+                    method:'DELETE',
+                    url: `http://localhost:4000/api/admin/products/${this.state._id}`,
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                      },
+                    data:this.state,
+                    
+                }).then(response => {
+                    if (response && response.data) {
+                        swal("Success!", "Record Deleted!", "success");
+                      this.setState({ clients: response.data });
+                    }
+                  })
+                  .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+          
+
+            }
+          });
+          
+
+
+
+       
       
     }
 
@@ -142,4 +161,4 @@ class UpdateProducts extends Component {
     }
 }
 
-export default UpdateProducts;
+export default DeleteProducts;
