@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import swal from 'sweetalert';
 class CreateProducts extends Component {
 
     constructor(props) {
@@ -71,7 +73,27 @@ class CreateProducts extends Component {
     }
 
     submitForm(){
-        console.log(this.state)
+        
+      
+        axios({
+            method:'POST',
+            url: 'http://localhost:4000/api/admin/products',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                Accept: "application/json"
+              },
+            data:this.state,
+            
+        }).then(response => {
+            if (response && response.data) {
+                swal("Success!", "Record Added Success!", "success");
+              this.setState({ clients: response.data });
+            }
+          })
+          .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+      
+
     }
 }
 
