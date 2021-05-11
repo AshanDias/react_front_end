@@ -37,7 +37,12 @@ class DeleteProducts extends Component {
 	<div className="row">
     <div className="col-md-4"></div>
 		<div className="col-md-4">
-
+          <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand" href="/admin/product">Home</a>
+            <a class="navbar-brand" href="/admin/product/create">Create</a>
+            <a class="navbar-brand" href="/admin/product/update">Update</a>
+            <a class="navbar-brand" href="/admin/product/delete">Delete</a>
+        </nav>
         <div className="form-group">
 					 
                      <label>

@@ -9,7 +9,6 @@ import DeleteProducts from "./admin/product/delete/Delete"
 function App() {
   return (<Router>
     <div className="App">
-      
       <Switch>
         <Route path="/admin/product" exact component={AdminProduct}></Route>
         <Route path="/admin/product/create" exact component={CreateProducts}></Route>  
