@@ -4,6 +4,15 @@ import Parser from 'html-react-parser';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 class AdminProducts extends Component {
 
+
+    constructor(props) {
+        super(props);
+
+        this.EditData = this.EditData.bind(this)
+
+      }
+
+
     render(){
         var result =null
         return (
@@ -31,6 +40,7 @@ class AdminProducts extends Component {
                     '<td scope="row">'+element["desc"]+'</td>'+
                     '<td scope="row">'+element["image"]+'</td>'+
                     '<td scope="row">'+element["price"]+'</td>'+
+                    '<td scope="row">  <button type="button" class="btn btn-success" onClick={this.EditData} >Action</button> </td>'+
                     '</tr>'
 
                 });
@@ -48,6 +58,7 @@ class AdminProducts extends Component {
                             <th scope="col"> Description</th>
                             <th scope="col">Image URL</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Action</th>
                             </tr>
                     </thead>
                     <tbody>
@@ -72,6 +83,9 @@ class AdminProducts extends Component {
         );
     }
 
+    EditData(){
+       console.log("tap")
+    }
 
 }
 
