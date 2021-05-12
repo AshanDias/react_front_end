@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
 import swal from 'sweetalert';
+import {storage} from "../../../firebase/firebase"
 class CreateProducts extends Component {
 
+
+  
     constructor(props) {
         super(props);
 
-     
+
         this.state = {
           name: "",
           desc: "",
@@ -16,6 +19,7 @@ class CreateProducts extends Component {
 
         this.myChangeHandler = this.myChangeHandler.bind(this)
         this.submitForm = this.submitForm.bind(this)
+        this.handleChange =this.handleChange.bind(this)
       }
 
         myChangeHandler = (event) => {
@@ -56,7 +60,8 @@ class CreateProducts extends Component {
 					<label>
 						Image
 					</label>
-					<input type="text" name="image" className="form-control" onChange={this.myChangeHandler} />
+					{/* <input type="text" name="image" className="form-control" onChange={this.myChangeHandler} /> */}
+          <input type="file" name="image" className="form-control" onChange={this.handleChange} />
 				</div>
 
                 <div className="form-group">
@@ -76,6 +81,30 @@ class CreateProducts extends Component {
      </div>
 </div>
         )
+    }
+    
+
+     handleChange(e) {
+       var imageFile = e.target.files[0]
+       const uploadTask = storage.ref(`/images/${imageFile.name}`).put(imageFile)
+       uploadTask.on('state_changed', 
+       (snapShot) => {
+         //takes a snap shot of the process as it is happening
+         console.log(snapShot)
+       }, (err) => {
+         //catches the errors
+         console.log(err)
+       }, () => {
+         // gets the functions from storage refences the image storage in firebase by the children
+         // gets the download url then sets the image from firebase as the value for the imgUrl key:
+         storage.ref('images').child(imageFile.name).getDownloadURL()
+          .then(fireBaseUrl => {
+            console.log(fireBaseUrl)
+            this.state.image=fireBaseUrl
+            swal("Image uploaded!");
+          })
+        })
+      console.log(imageFile);
     }
 
     submitForm(){
