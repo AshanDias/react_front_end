@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import swal from 'sweetalert';
 import {storage} from "../../../firebase/firebase"
+var qs = require('qs')
+
 class UpdateProducts extends Component {
 
     constructor(props) {
@@ -19,7 +21,6 @@ class UpdateProducts extends Component {
 
         this.myChangeHandler = this.myChangeHandler.bind(this)
         this.submitForm = this.submitForm.bind(this)
-        this.searchData=this.searchData.bind(this)
         this.handleChange =this.handleChange.bind(this)
       }
 
@@ -44,17 +45,7 @@ class UpdateProducts extends Component {
             <a class="navbar-brand" href="/admin/product/update">Update</a>
             <a class="navbar-brand" href="/admin/product/delete">Delete</a>
         </nav>
-        <div className="form-group">
-					 
-                     <label>
-                         Search By Id
-                     </label>
-                     <input type="text" name="_id"  className="form-control" placeholder="Input ID"  onChange={this.myChangeHandler} />
-                   <br></br>
-              <button type="button" className="btn btn-primary" onClick={this.searchData}>
-					Search
-				</button>
-         </div>
+     
 
 <b> Product Update</b><hr></hr>
 			<form>
@@ -77,7 +68,6 @@ class UpdateProducts extends Component {
 					<label>
 						Image
 					</label>
-					{/* <input type="text" name="image" value={this.state.image} className="form-control" onChange={this.myChangeHandler} /> */}
           <input type="file" name="image" className="form-control" onChange={this.handleChange} />
       	</div>
 
@@ -99,7 +89,31 @@ class UpdateProducts extends Component {
     </div>
         )
     }
-
+    async componentDidMount(){
+      var res =qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id
+      
+      axios({
+        method:'GET',
+        url: `http://localhost:4000/api/admin/products/${res}`,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+       
+        
+    }).then(response => {
+        if (response && response.data) {
+          this.state._id=response.data[0]["_id"]  
+            this.state.name=response.data[0]["name"]
+            this.state.desc=response.data[0]["desc"]
+            this.state.image=response.data[0]["image"]
+            this.state.price=response.data[0]["price"]
+          this.setState({ clients: response.data });
+        }
+      })
+      .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+    }
 
     handleChange(e) {
       var imageFile = e.target.files[0]
@@ -125,7 +139,7 @@ class UpdateProducts extends Component {
    }
 
     submitForm(){
-       
+      
         axios({
             method:'PUT',
             url: `http://localhost:4000/api/admin/products/${this.state._id}`,
@@ -146,31 +160,7 @@ class UpdateProducts extends Component {
       
     }
 
-    searchData(){
-
-        
-
-        axios({
-            method:'GET',
-            url: `http://localhost:4000/api/admin/products/${this.state._id}`,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Content-Type": "application/json",
-                Accept: "application/json"
-              },
-           
-            
-        }).then(response => {
-            if (response && response.data) {
-                this.state.name=response.data[0]["name"]
-                this.state.desc=response.data[0]["desc"]
-                this.state.image=response.data[0]["image"]
-                this.state.price=response.data[0]["price"]
-              this.setState({ clients: response.data });
-            }
-          })
-          .catch(error =>  swal("Error!", "An Error Occured!", "error"));
-    }
+    
 }
 
 export default UpdateProducts;
