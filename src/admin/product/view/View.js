@@ -47,8 +47,6 @@ class AdminProducts extends Component {
         <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/admin/product">Home</a>
         <a class="navbar-brand" href="/admin/product/create">Create</a>
-        <a class="navbar-brand" href="/admin/product/update">Update</a>
-        <a class="navbar-brand" href="/admin/product/delete">Delete</a>
         </nav>
         </div>
             </div>
@@ -77,6 +75,7 @@ class AdminProducts extends Component {
                   <Items 
                     product={item}
                     onEdit={() => this.editProduct(item)}
+                    onDelete={() => this.deleteProduct(item)}
                   />
 
                 ))
@@ -95,6 +94,44 @@ class AdminProducts extends Component {
         );
     }
 
+    async deleteProduct(item){
+      
+
+      swal({
+        title: "Are you sure?",
+        text: "Do you want to delete this item!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+         
+          //start
+          axios({
+            method:'DELETE',
+            url: `http://localhost:4000/api/admin/products/${item._id}`,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json",
+                Accept: "application/json"
+              },
+            
+        }).then(response => {
+            if (response && response.data) {
+                swal("Success!", "Record Deleted!", "success");
+              this.setState({ clients: response.data });
+              window.location.reload();
+            }
+          })
+          .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+          //end
+
+
+        }
+      });
+
+    }
     async editProduct(item){
       window.location.replace('/admin/product/update?id='+item._id+'')
     }
