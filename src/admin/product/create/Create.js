@@ -58,8 +58,8 @@ class CreateProducts extends Component {
 					<label>
 						Image
 					</label>
-					{/* <input type="text" name="image" className="form-control" onChange={this.myChangeHandler} /> */}
           <input type="file" name="image" className="form-control" onChange={this.handleChange} />
+         
 				</div>
 
                 <div className="form-group">
