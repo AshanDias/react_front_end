@@ -1,24 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
-
+import AdminProduct from './admin/product/view/View'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import AdminProducts from "./admin/product/view/View";
+import CreateProducts from "./admin/product/create/Create"
+import UpdateProducts from "./admin/product/update/Update"
+import DeleteProducts from "./admin/product/delete/Delete"
 function App() {
-  return (
+  return (<Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route path="/admin/product" exact component={AdminProduct}></Route>
+        <Route path="/admin/product/create" exact component={CreateProducts}></Route>  
+        <Route path="/admin/product/update" exact component={UpdateProducts}></Route> 
+        <Route path="/admin/product/delete" exact component={DeleteProducts}></Route> 
+      </Switch>
     </div>
+  </Router>
   );
 }
 
