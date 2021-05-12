@@ -139,7 +139,10 @@ class UpdateProducts extends Component {
    }
 
     submitForm(){
-      
+      if(!this.state.name || !this.state.desc || !this.state.image || !this.state.price){
+        
+        swal("Error", "Fields cannot be null!", "error");
+      }else{
         axios({
             method:'PUT',
             url: `http://localhost:4000/api/admin/products/${this.state._id}`,
@@ -157,7 +160,7 @@ class UpdateProducts extends Component {
             }
           })
           .catch(error =>  swal("Error!", "An Error Occured!", "error"));
-      
+        }
     }
 
     
