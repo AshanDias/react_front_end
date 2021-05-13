@@ -11,6 +11,7 @@ import Nav from "./client/nav/Nav";
 import Home from "./client/home/home";
 import SignIn from "./client/user/signin/signin";
 import SignUp from "./client/user/signup/signup";
+import Cart from "./client/cart/cart";
 
 //End Client
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" exact component={Home}></Route> 
         <Route path="/signin" exact component={SignIn}></Route> 
         <Route path="/signup" exact component={SignUp}></Route> 
+        <Route path="/cart" exact component={Cart}></Route>  
          {/* End Client */} 
       </Switch>
     </div>

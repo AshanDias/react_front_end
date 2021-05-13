@@ -23,11 +23,10 @@ class Nav extends React.Component {
     return (
       <nav>
         <Link style={navStyle} to="/"> <h1>LOGO</h1></Link>
-        <ul className="nav-links">
-          <Link style={navStyle} to="/about"><li>About</li></Link>
-          <Link style={navStyle} to="/cart"><li>Cart</li></Link>
-          <Link style={navStyle} to="/admin/product"><li>Admin</li></Link>
-          {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout">LogOut</button> : <Link style={navStyle} to="/signin"><li id="signin">SignIn</li></Link>}
+        <ul className="nav-links"> 
+          <Link style={navStyle} to="/cart"><li><i class="fa fa-cart-plus" aria-hidden="true"></i> Cart</li></Link>
+          <Link style={navStyle} to="/admin/product"><li><i class="fa fa-user" aria-hidden="true"></i> Admin</li></Link>
+          {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</button> : <Link style={navStyle} to="/signin"><li id="signin">SignIn</li></Link>}
         </ul>
       </nav>
 
