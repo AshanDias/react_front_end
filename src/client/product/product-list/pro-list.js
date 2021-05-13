@@ -4,7 +4,7 @@ import './pro-list.css';
 var html = "";
 
 class ProductList extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.fetchAllProducts();
@@ -14,7 +14,30 @@ class ProductList extends React.Component {
     return (
       <div class="container">
         <div id="itemCard" class="row">{Parser(html)}</div>
+
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+
     );
   }
 
@@ -94,8 +117,9 @@ class ProductList extends React.Component {
       html += '  <div class="card-body">';
       html += '    <h5 class="card-title">' + element.title + '</h5>';
       html += '    <h6 class="card-sub-title text-muted">' + element.subTitle + '</h6>';
-      html += '    <p class="card-text text-danger">Rs.' + element.price + '</p>'; 
-      html += '      <button type="button" class="btn btn-primary btn-block btn-full mb-1"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>';
+      html += '    <p class="card-text text-danger">Rs.' + element.price + '</p>';
+      html += '  <div class="row" style="margin-left:auto;margin-right:auto;"> ';
+      html += '      <button type="button" class="btn btn-sm btn-primary mr-1"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button> <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye" aria-hidden="true"></i></button></div>';
       html += '  </div>';
       html += '</div>';
     });

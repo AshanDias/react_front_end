@@ -1,25 +1,65 @@
 import React from 'react'
+import User from '../../model/User';
 import { Link } from 'react-router-dom'
 import '../../App.css';
+var navStyle = {
+  color: "white",
+  //text-decoration: none;
+}
+class Nav extends React.Component {
 
-function Nav() {
-  const navStyle = {
-    color: "white",
-    //text-decoration: none;
+  user = new User();
+
+  constructor(props) {
+    super(props);
+    this.state = { isLoggedIn: false };
+    this.userIsLoggedIn();
   }
 
-  return (
-    <nav>
-      <Link style={navStyle} to="/"> <h1>LOGO</h1></Link>
-      <ul className="nav-links">
-        <Link style={navStyle} to="/about"><li>About</li></Link>
-        <Link style={navStyle} to="/cart"><li>Cart</li></Link>
-        <Link style={navStyle} to="/admin/product"><li>Admin</li></Link>
-        <Link style={navStyle} to="/signin"><li>SignIn</li></Link> 
-      </ul>
-    </nav>
 
-  );
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    return (
+      <nav>
+        <Link style={navStyle} to="/"> <h1>LOGO</h1></Link>
+        <ul className="nav-links">
+          <Link style={navStyle} to="/about"><li>About</li></Link>
+          <Link style={navStyle} to="/cart"><li>Cart</li></Link>
+          <Link style={navStyle} to="/admin/product"><li>Admin</li></Link>
+          {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout">LogOut</button> : <Link style={navStyle} to="/signin"><li id="signin">SignIn</li></Link>}
+        </ul>
+      </nav>
+
+    );
+  }
+
+  userIsLoggedIn = () => {
+    var result = this.user.isUserLoggedIn();
+    result.then(data => {
+
+      if (data == null) {
+        this.setState({ isLoggedIn: false });
+      }
+      else {
+        this.setState({ isLoggedIn: true });
+      }
+    }).catch(err => {
+      return this.setState({ isLoggedIn: true });
+    });
+
+
+  }
+
+  logout = () => {
+    var result = this.user.removeUserSession();
+    result.then(data => {
+      window.location.href = "/";
+    }).catch(err => {
+        console.log(err);
+    });
+  }
+
 }
 
 export default Nav;
