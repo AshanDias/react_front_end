@@ -6,14 +6,28 @@ import AdminProducts from "./admin/product/view/View";
 import CreateProducts from "./admin/product/create/Create"
 import UpdateProducts from "./admin/product/update/Update"
 import DeleteProducts from "./admin/product/delete/Delete"
+//Client
+import Nav from "./client/nav/Nav";
+import Home from "./client/home/home";
+import SignIn from "./client/user/signin/signin";
+import SignUp from "./client/user/signup/signup";
+
+//End Client
+
 function App() {
   return (<Router>
     <div className="App">
+    <Nav />
       <Switch>
         <Route path="/admin/product" exact component={AdminProduct}></Route>
         <Route path="/admin/product/create" exact component={CreateProducts}></Route>  
         <Route path="/admin/product/update" exact component={UpdateProducts}></Route> 
         <Route path="/admin/product/delete" exact component={DeleteProducts}></Route> 
+        {/* Client */} 
+        <Route path="/" exact component={Home}></Route> 
+        <Route path="/signin" exact component={SignIn}></Route> 
+        <Route path="/signup" exact component={SignUp}></Route> 
+         {/* End Client */} 
       </Switch>
     </div>
   </Router>
