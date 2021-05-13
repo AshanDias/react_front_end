@@ -60,11 +60,10 @@ class SignUp extends React.Component {
     this.user.name = txtName.current.value;
     this.user.address = txtAddress.current.value;
     this.user.phone = txtPhone.current.value; 
-    
+    console.log(this.user);
     var result = this.user.createUser(this.user);
     result.then(data => {
-      if (data.status == 200) {
-        swal("Success", "User Successfuly Created", "success");
+      if (data.status == 200) { 
         this.user.createUserSession(data.data);
         window.location.href = "/"
 

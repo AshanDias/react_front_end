@@ -16,11 +16,7 @@ class ServerConnector extends React.Component {
 
     post(_API, data) {
 
-        return Promise.resolve(axios.post(_API, {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        }, data));
+        return Promise.resolve(axios.post(_API, data));
     }
 
 

@@ -9,6 +9,11 @@ class User extends React.Component {
     phone = null;
     _token
 
+    login(user)
+    {
+        this.serverConnector._API = this.serverConnector._BASE_URL+"/api/login";
+        return this.serverConnector.post(this.serverConnector._API,user);
+    }
 
     createUser(user)
     {
