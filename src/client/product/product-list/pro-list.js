@@ -13,7 +13,7 @@ class ProductList extends React.Component {
   state = { products: [] };
   constructor(props) {
     super(props);
-  
+
   }
 
   render() {
@@ -23,9 +23,11 @@ class ProductList extends React.Component {
           {
             this.state.products.map((item) => (
               <Pro key={item._id} product={item}
-                onAddToCart={() => this.addtoCart(item)} />
+                onAddToCart={() => this.addtoCart(item)}
+                pass = {()=> this.pass(item._id)}
+                />
             ))
-          }  
+          }
         </div>
       </div>
 
@@ -36,20 +38,24 @@ class ProductList extends React.Component {
     this.fetchAllItems();
   }
 
+  pass = (id) => {
+    window.location.replace('/product/details?id=' + id)
+  }
+
 
   fetchAllItems = () => {
 
     var result = this.item.getItemList();
     result.then(data => {
-      if (data.status == 200) { 
-        this.setState({ products: data.data }); 
+      if (data.status == 200) {
+        this.setState({ products: data.data });
       }
 
     }).catch(err => {
       swal("Information", err.message, "info");
     });
 
-  } 
+  }
 
   addtoCart = (item) => {
     this.cart.addToCart(item);

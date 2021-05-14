@@ -5,8 +5,10 @@ import swal from 'sweetalert';
 import './cart.css';
 
 class Cart extends React.Component {
-  state = { products: [] };
+   
+  state = { products: [],total:0 };
   cart = new CartM();
+  
   constructor(props) {
     super(props);
 
@@ -32,23 +34,28 @@ class Cart extends React.Component {
               </thead>
               <tbody>
                 {
-                  this.state.products.map((item) => (
-                    this.state.products.length > 0 ? <CartItem key={item._id} product={item}
+                  this.state.total = 0,  
+                  this.state.products != null  ?
+                  this.state.products.map((item) => ( 
+                    this.state.total = this.state.total + (item.price * item.__v),
+                     <CartItem key={item._id} product={item}
                       minus={() => this.minus(item._id)}
                       add={() => this.add(item._id)}
-                      delete={() => this.deleteItem(item._id)} /> : <div>No Items found</div>
-                  ))
+                      delete={() => this.deleteItem(item._id)}
+                    />  
+                  )) : <div><p>No Items found</p></div>
                 }
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan="4" class="text-left"><h1>Total</h1></td>
-                  <td> 4 </td>
-                  <td colSpan="2">$400</td>
+                  <td colSpan="5" class="text-left"><h1>Total</h1></td>
+                  
+                  <td colSpan="2" class="text-right">Rs &nbsp;{this.state.total.toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td colSpan="5"></td>
-                  <td colSpan="2"><button type="button" class="btn btn-full btn-block btn-success"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> $400 Checkout</button></td>
+                  <td colSpan="2"><button type="button" class="btn btn-full btn-block btn-success"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Rs &nbsp;${this.state.total.toFixed(2)} Checkout</button></td>
+                  
                 </tr>
               </tfoot>
             </table>
@@ -60,6 +67,10 @@ class Cart extends React.Component {
 
   async componentDidMount() {
     this.getCartItems();
+  }
+
+  calTotal = (totoal) =>{
+    console.log(totoal);
   }
  
   getCartItems = () => {

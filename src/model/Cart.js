@@ -3,8 +3,7 @@ import Item from '../model/Item';
 import ServerConnector from '../model/ServerConnector';
 class CartM extends React.Component {
     serverConnector = new ServerConnector();
-    cartItemList = [];
-
+    cartItemList = []; 
 
     addToCart(item) {
         var value = sessionStorage.getItem("cart")
@@ -20,6 +19,7 @@ class CartM extends React.Component {
             }
         }
         else {
+            item.__v = 1;
             this.cartItemList.push(item)
             this.serverConnector.saveStatusOnLocalStorage("cart", JSON.stringify(this.cartItemList));
         }
