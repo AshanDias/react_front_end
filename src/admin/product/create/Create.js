@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import swal from 'sweetalert';
 import {storage} from "../../../firebase/firebase"
+import ServerConnector from '../../../model/ServerConnector';
+
 class CreateProducts extends Component {
 
-
+  serverConnector = new ServerConnector();
   
     constructor(props) {
         super(props);
@@ -106,6 +108,7 @@ class CreateProducts extends Component {
     }
 
     submitForm(){
+      var baseurl=this.serverConnector._BASE_URL
         if(!this.state.name || !this.state.desc || !this.state.image || !this.state.price){
         
           swal("Error", "Fields cannot be null!", "error");
@@ -114,7 +117,7 @@ class CreateProducts extends Component {
       
         axios({
             method:'POST',
-            url: 'http://localhost:4000/api/admin/products',
+            url: `${baseurl}/api/admin/products`,
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",

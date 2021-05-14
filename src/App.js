@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import logo from './logo.svg';
 import './App.css';
 import AdminProduct from './admin/product/view/View'
@@ -41,3 +42,44 @@ function App() {
 }
 
 export default App;
+=======
+import logo from './logo.svg';
+import './App.css';
+import AdminProduct from './admin/product/view/View'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import AdminProducts from "./admin/product/view/View";
+import CreateProducts from "./admin/product/create/Create"
+import UpdateProducts from "./admin/product/update/Update"
+import DeleteProducts from "./admin/product/delete/Delete"
+//Client
+import Nav from "./client/nav/Nav";
+import Home from "./client/home/home";
+import SignIn from "./client/user/signin/signin";
+import SignUp from "./client/user/signup/signup";
+import Cart from "./client/cart/cart";
+
+//End Client
+
+function App() {
+  return (<Router>
+    <div className="App">
+    <Nav />
+      <Switch>
+        <Route path="/admin/product" exact component={AdminProduct}></Route>
+        <Route path="/admin/product/create" exact component={CreateProducts}></Route>  
+        <Route path="/admin/product/update" exact component={UpdateProducts}></Route> 
+        <Route path="/admin/product/delete" exact component={DeleteProducts}></Route> 
+        {/* Client */} 
+        <Route path="/" exact component={Home}></Route> 
+        <Route path="/signin" exact component={SignIn}></Route> 
+        <Route path="/signup" exact component={SignUp}></Route> 
+        <Route path="/cart" exact component={Cart}></Route>  
+         {/* End Client */} 
+      </Switch>
+    </div>
+  </Router>
+  );
+}
+
+export default App;
+>>>>>>> 2ea560065121dde08c7b01772c0e3ed6c2152f5a

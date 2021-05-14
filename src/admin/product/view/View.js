@@ -6,10 +6,10 @@ import swal from 'sweetalert';
 import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 import Items from './item'
 import { Redirect } from 'react-router-dom'
-
+import ServerConnector from '../../../model/ServerConnector';
 
 class AdminProducts extends Component {
-
+  serverConnector = new ServerConnector();
     state = {
         proucts: [],
     };
@@ -95,7 +95,7 @@ class AdminProducts extends Component {
     }
 
     async deleteProduct(item){
-      
+      var baseurl=this.serverConnector._BASE_URL
 
       swal({
         title: "Are you sure?",
@@ -110,7 +110,7 @@ class AdminProducts extends Component {
           //start
           axios({
             method:'DELETE',
-            url: `http://localhost:4000/api/admin/products/${item._id}`,
+            url: `${baseurl}/api/admin/products/${item._id}`,
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
@@ -140,9 +140,11 @@ class AdminProducts extends Component {
 
   async componentDidMount() {
  
+    var baseurl=this.serverConnector._BASE_URL
+
     await axios({
       method:'GET',
-      url: 'http://localhost:4000/api/admin/products',
+      url: `${baseurl}/api/admin/products`,
       headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
