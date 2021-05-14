@@ -9,11 +9,11 @@ var navStyle = {
 class Nav extends React.Component {
 
   user = new User();
-
+  state = { isLoggedIn: false };
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
-    this.userIsLoggedIn();
+
+    //
   }
 
 
@@ -23,14 +23,17 @@ class Nav extends React.Component {
     return (
       <nav>
         <Link style={navStyle} to="/"> <h1>LOGO</h1></Link>
-        <ul className="nav-links"> 
-        {isLoggedIn === true ? <Link style={navStyle} to="/cart"><li><i class="fa fa-cart-plus" aria-hidden="true"></i> Cart</li></Link> : ''}
+        <ul className="nav-links">
+          {isLoggedIn === true ? <Link style={navStyle} to="/cart"><li><i class="fa fa-cart-plus" aria-hidden="true"></i> Cart</li></Link> : ''}
           {isLoggedIn === true ? <Link style={navStyle} to="/admin/product"><li><i class="fa fa-user" aria-hidden="true"></i> Admin</li></Link> : ''}
-          {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</button> : ''}
+          {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</button> : <Link style={navStyle} to="/signin"><li> <i class="fa fa-user" aria-hidden="true"></i> SignIn</li></Link>}
         </ul>
       </nav>
 
     );
+  }
+  async componentDidMount() {
+    this.userIsLoggedIn();
   }
 
   userIsLoggedIn = () => {
@@ -55,7 +58,7 @@ class Nav extends React.Component {
     result.then(data => {
       window.location.href = "/signin";
     }).catch(err => {
-        console.log(err);
+      console.log(err);
     });
   }
 

@@ -26,13 +26,13 @@ class User extends React.Component {
         //Save user token and user information on local storage
         //Save the space between bearer and token (bearer __ Token)
         this._token = "bearer"+" "+user.token
-        this.serverConnector.saveToekn(this._token);
+        this.serverConnector.saveToken(this._token);
         this.serverConnector.saveStatusOnLocalStorage("user",JSON.stringify(user.user));
     }
 
     isUserLoggedIn()
     {
-        return this.serverConnector.showLocalStorage("_token");
+        return this.serverConnector.getToken();
         
     }
 
