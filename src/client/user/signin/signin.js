@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import User from '../../../model/User';
 import './signin.css';
 import GoogleLogin from 'react-google-login'
-
+import axios from "axios";
 var html = "";
 let txtEmail = React.createRef();
 let txtPassword = React.createRef();
@@ -55,8 +55,26 @@ class SignIn extends React.Component {
   }
 
   responseGoogle=(response)=>{
-    console.log(response);
-    console.log(response.profileObj)
+    axios({
+      method:'PUT',
+      url: `http://localhost:4000/api/social/login`,
+      headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+      data:{token:response.accessToken},
+      
+  }).then(response => {
+      if (response && response.data) {
+          window.sessionStorage.clear();
+          window.sessionStorage.accessToken = response.data.token;
+        this.setState({ clients: response.data });
+      }
+    })
+    .catch(error =>  swal("Error!", "An Error Occured!", "error"));
+
+
   }
 
   userSignin = () => {
