@@ -56,7 +56,7 @@ class SignIn extends React.Component {
 
   responseGoogle=(response)=>{
     axios({
-      method:'PUT',
+      method:'POST',
       url: `http://localhost:4000/api/social/login`,
       headers: {
           "Access-Control-Allow-Origin": "*",
@@ -69,6 +69,7 @@ class SignIn extends React.Component {
       if (response && response.data) {
           window.sessionStorage.clear();
           window.sessionStorage.accessToken = response.data.token;
+          window.location.href="/"
         this.setState({ clients: response.data });
       }
     })
