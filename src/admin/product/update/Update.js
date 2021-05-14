@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import swal from 'sweetalert';
 import {storage} from "../../../firebase/firebase"
+import ServerConnector from '../../../model/ServerConnector';
 var qs = require('qs')
 
 class UpdateProducts extends Component {
-
+  serverConnector = new ServerConnector();
+  
     constructor(props) {
         super(props);
 
@@ -89,10 +91,10 @@ class UpdateProducts extends Component {
     }
     async componentDidMount(){
       var res =qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id
-      
+      var baseurl=this.serverConnector._BASE_URL
       axios({
         method:'GET',
-        url: `http://localhost:4000/api/admin/products/${res}`,
+        url: `${baseurl}/api/admin/products/${res}`,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -138,13 +140,14 @@ class UpdateProducts extends Component {
    }
 
     submitForm(){
+      var baseurl=this.serverConnector._BASE_URL
       if(!this.state.name || !this.state.desc || !this.state.image || !this.state.price){
         
         swal("Error", "Fields cannot be null!", "error");
       }else{
         axios({
             method:'PUT',
-            url: `http://localhost:4000/api/admin/products/${this.state._id}`,
+            url: `${baseurl}/api/admin/products/${this.state._id}`,
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
