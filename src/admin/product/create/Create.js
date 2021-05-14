@@ -118,7 +118,8 @@ class CreateProducts extends Component {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
-                Accept: "application/json"
+                Accept: "application/json",
+                "authorization":window.sessionStorage.accessToken
               },
             data:this.state,
             
