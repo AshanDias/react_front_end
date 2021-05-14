@@ -5,13 +5,20 @@ import User from '../../../model/User';
 import './signin.css';
 import GoogleLogin from 'react-google-login'
 import axios from "axios";
+import ServerConnector from '../../../model/ServerConnector';
+
+
 var html = "";
 let txtEmail = React.createRef();
 let txtPassword = React.createRef();
 class SignIn extends React.Component {
   user = new User();
+  serverConnector = new ServerConnector();
+  
   constructor(props) {
     super(props); 
+   
+   
   }
 
   render() {
@@ -55,9 +62,12 @@ class SignIn extends React.Component {
   }
 
   responseGoogle=(response)=>{
+   
+    var baseurl=this.serverConnector._BASE_URL
+    
     axios({
       method:'POST',
-      url: `http://localhost:4000/api/social/login`,
+      url: `${baseurl}/api/social/login`,
       headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
