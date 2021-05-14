@@ -3,6 +3,8 @@ import swal from 'sweetalert';
 import { Link } from 'react-router-dom'
 import User from '../../../model/User';
 import './signin.css';
+import GoogleLogin from 'react-google-login'
+
 var html = "";
 let txtEmail = React.createRef();
 let txtPassword = React.createRef();
@@ -29,13 +31,33 @@ class SignIn extends React.Component {
             <button class="btn btn-success btn-full btn-block" onClick={this.userSignin}>Sign In</button>
             <Link class="btn btn-link" to="/signup">Sign Up</Link>
 
+            <div class="row">
+              <div class="col-lg-4">
+
+                    <GoogleLogin
+                      clientId="914232850475-58ki68o5doprfgh6f9aqqqhqbg8gevjt.apps.googleusercontent.com"
+                      buttonText="Login"
+                      onSuccess={this.responseGoogle}
+                      onFailure={this.responseGoogle}
+                      cookiePolicy={'single_host_origin'}
+
+                    />
+
+              </div>
+            </div>
+          
           </div>
-          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+          </div>
         </div>
       </div>
     );
   }
 
+  responseGoogle=(response)=>{
+    console.log(response);
+    console.log(response.profileObj)
+  }
 
   userSignin = () => {
     this.user.email = txtEmail.current.value;
