@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from 'react-router-dom'
 class Pro extends Component {
     render() {
         return (
@@ -10,12 +10,17 @@ class Pro extends Component {
                     <h6 class="card-sub-title text-muted">{this.props.product.desc}</h6>
                     <p class="card-text text-danger">Rs.{this.props.product.price}</p>
                     <div class=" container">
-                        <button type="button" class="btn btn-sm btn-primary mr-1" onClick={this.props.onAddToCart}><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button> <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-primary mr-1" onClick={this.props.onAddToCart}><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>  
+                        <button type="button" class="btn btn-sm btn-primary mr-1" onClick={this.props.pass}><i class="fa fa-eye" aria-hidden="true"></i></button>  
+                        {/* <Link class="btn btn-sm btn-success"  to="/product/details" params={{ aaa: "das"}}><i class="fa fa-eye" aria-hidden="true"></i></Link> */}
                     </div>
                 </div>
             </div>
         )
     }
+
+   
+
 }
 
 export default Pro;
