@@ -114,7 +114,8 @@ class AdminProducts extends Component {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Content-Type": "application/json",
-                Accept: "application/json"
+                Accept: "application/json",
+                "authorization":window.sessionStorage.accessToken
               },
             
         }).then(response => {
@@ -134,16 +135,19 @@ class AdminProducts extends Component {
     }
     async editProduct(item){
       window.location.replace('/admin/product/update?id='+item._id+'')
+    
     }
 
   async componentDidMount() {
+ 
     await axios({
       method:'GET',
       url: 'http://localhost:4000/api/admin/products',
       headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          Accept: "application/json"
+          Accept: "application/json",
+          "authorization":window.sessionStorage.accessToken
         },
      
       

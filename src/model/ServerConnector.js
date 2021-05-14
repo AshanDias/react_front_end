@@ -26,12 +26,17 @@ class ServerConnector extends React.Component {
         return Promise.resolve(sessionStorage.setItem(name, JSON.stringify(statusObj)));
     }
 
+    saveToekn(token){
+       return window.sessionStorage.accessToken=token;
+    }
+
     removeStatusOnLocalStorage() {
+        window.sessionStorage.clear();
         return Promise.resolve(sessionStorage.clear());
     }
 
     showLocalStorage(name) {
-        return Promise.resolve(sessionStorage.getItem(name));
+        return Promise.resolve(window.sessionStorage.accessToken);
     }
 
 }
