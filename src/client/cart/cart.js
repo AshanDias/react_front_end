@@ -1,10 +1,15 @@
 import React from 'react'
+import CartM from '../../model/Cart'
+import CartItem from './cartItem'
+import swal from 'sweetalert';
 import './cart.css';
 
 class Cart extends React.Component {
-
+  state = { products: [] };
+  cart = new CartM();
   constructor(props) {
     super(props);
+
   }
 
   render() {
@@ -13,7 +18,6 @@ class Cart extends React.Component {
         <div class="card">
           <div class="card-body  table-responsive">
             <h4 class="card-title">Your Shopping Cart</h4>
-
             <table class="table table-striped table-inverse">
               <thead class="thead-inverse">
                 <tr>
@@ -27,47 +31,18 @@ class Cart extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><img id="cartImg" src="https://s.cdpn.io/3/dingo-dog-bones.jpg" alt="" /></td>
-                  <td>Dingo Dog Bones</td>
-                  <td>$50.00</td>
-                  <td> <input type="number" name="" id="" value="1" class="form-control form-control-sm"  /></td>
-                  <td>$100</td>
-                  <td><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td><img id="cartImg" src="https://s.cdpn.io/3/dingo-dog-bones.jpg" alt="" /></td>
-                  <td>Dingo Dog Bones</td>
-                  <td>$50.00</td>
-                  <td> <input type="number" name="" id="" value="1" class="form-control form-control-sm"  /></td>
-                  <td>$100</td>
-                  <td><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td><img id="cartImg" src="https://s.cdpn.io/3/dingo-dog-bones.jpg" alt="" /></td>
-                  <td>Dingo Dog Bones</td>
-                  <td>$50.00</td>
-                  <td> <input type="number" name="" id="" value="1" class="form-control form-control-sm"  /></td>
-                  <td>$100</td>
-                  <td><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td><img id="cartImg" src="https://s.cdpn.io/3/dingo-dog-bones.jpg" alt="" /></td>
-                  <td>Dingo Dog Bones</td>
-                  <td>$50.00</td>
-                  <td> <input type="number" name="" id="" value="1" class="form-control form-control-sm"  /></td>
-                  <td>$100</td>
-                  <td><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                </tr>
-
+                {
+                  this.state.products.map((item) => (
+                    this.state.products.length > 0 ? <CartItem key={item._id} product={item}
+                      minus={() => this.minus(item._id)}
+                      add={() => this.add(item._id)}
+                      delete={() => this.deleteItem(item._id)} /> : <div>No Items found</div>
+                  ))
+                }
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan="4" class="text-left"><bold><h1>Total</h1></bold></td>
+                  <td colSpan="4" class="text-left"><h1>Total</h1></td>
                   <td> 4 </td>
                   <td colSpan="2">$400</td>
                 </tr>
@@ -81,6 +56,48 @@ class Cart extends React.Component {
         </div>
       </div>
     )
+  }
+
+  async componentDidMount() {
+    this.getCartItems();
+  }
+ 
+  getCartItems = () => {
+    var value = sessionStorage.getItem("cart")
+    var data = JSON.parse(value)
+    this.setState({ products: data });
+  }
+
+  add = (id) => {
+    var value = sessionStorage.getItem("cart")
+    var data = JSON.parse(value)
+    var index = data.findIndex(x => x._id == id);
+    data[index].__v = data[index].__v + 1;
+    this.cart.updateCart(data);
+    this.getCartItems();
+    //console.log();
+  }
+
+  minus = (id) => {
+    var value = sessionStorage.getItem("cart")
+    var data = JSON.parse(value)
+    var index = data.findIndex(x => x._id == id);
+    if (data[index].__v >= 1)
+      data[index].__v = (data[index].__v - 1)
+     
+
+    this.cart.updateCart(data);
+    this.getCartItems();
+  }
+
+  deleteItem = (id) => {
+    var value = sessionStorage.getItem("cart")
+    var data = JSON.parse(value)
+    var index = data.findIndex(x => x._id == id); 
+   
+    data.splice(index, 1)
+    this.cart.updateCart(data);
+    this.getCartItems();
   }
 }
 export default Cart;
