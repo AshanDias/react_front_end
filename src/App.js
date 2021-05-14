@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import logo from './logo.svg';
 import './App.css';
 import AdminProduct from './admin/product/view/View'
@@ -42,7 +41,7 @@ function App() {
 }
 
 export default App;
-=======
+
 import logo from './logo.svg';
 import './App.css';
 import AdminProduct from './admin/product/view/View'
@@ -57,6 +56,7 @@ import Home from "./client/home/home";
 import SignIn from "./client/user/signin/signin";
 import SignUp from "./client/user/signup/signup";
 import Cart from "./client/cart/cart";
+import ProductDetails from "./client/product/product-detail/pro-detail";
 
 //End Client
 
@@ -73,7 +73,10 @@ function App() {
         <Route path="/" exact component={Home}></Route> 
         <Route path="/signin" exact component={SignIn}></Route> 
         <Route path="/signup" exact component={SignUp}></Route> 
-        <Route path="/cart" exact component={Cart}></Route>  
+        <Route path="/cart" exact component={Cart}></Route> 
+        <Route path="/product/details" exact component={ProductDetails}></Route> 
+
+         
          {/* End Client */} 
       </Switch>
     </div>
@@ -82,4 +85,4 @@ function App() {
 }
 
 export default App;
->>>>>>> 2ea560065121dde08c7b01772c0e3ed6c2152f5a
+
