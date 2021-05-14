@@ -25,7 +25,7 @@ class Nav extends React.Component {
         <Link style={navStyle} to="/"> <h1>LOGO</h1></Link>
         <ul className="nav-links"> 
         {isLoggedIn === true ? <Link style={navStyle} to="/cart"><li><i class="fa fa-cart-plus" aria-hidden="true"></i> Cart</li></Link> : ''}
-          {isLoggedIn === true ? <Link style={navStyle} to="/admin/product"><li><i class="fa fa-user" aria-hidden="true"></i> Admin</li></Link> : ''}
+          {sessionStorage.getItem("user") !=null ? <Link style={navStyle} to="/admin/product"><li><i class="fa fa-user" aria-hidden="true"></i> Admin</li></Link> : ''}
           {isLoggedIn === true ? <button class="btn btn-link text-light" onClick={this.logout} id="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</button> : ''}
         </ul>
       </nav>
@@ -46,7 +46,6 @@ class Nav extends React.Component {
     }).catch(err => {
       return this.setState({ isLoggedIn: true });
     });
-
 
   }
 
