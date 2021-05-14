@@ -68,7 +68,7 @@ class SignIn extends React.Component {
   }).then(response => {
       if (response && response.data) {
           window.sessionStorage.clear();
-          window.sessionStorage.accessToken = response.data.token;
+          window.sessionStorage.accessToken = "bearer "+response.data.token;
           window.location.href="/"
         this.setState({ clients: response.data });
       }
